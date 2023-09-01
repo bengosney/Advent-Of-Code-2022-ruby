@@ -31,4 +31,4 @@ repos:
   - id: bundler-audit
   - id: fasterer
   - id: rubocop
-    args: [--auto-correct-all]
+    args: [--autocorrect-all]
