@@ -6,20 +6,20 @@ ROCK = 1
 PAPAER = 2
 SCISSORS = 3
 
-LOOSE = 0
-DRAW = 3
-WIN = 6
+LOOSE = 'X'
+DRAW = 'Y'
+WIN = 'Z'
 
 # Solver for Day 2
 class Day2
   def score_game(game)
     case game
     in [ROCK, PAPAER] | [PAPAER, SCISSORS] | [SCISSORS, ROCK]
-      WIN
+      6
     in [ROCK, ROCK] | [PAPAER, PAPAER] | [SCISSORS, SCISSORS]
-      DRAW
+      3
     in [PAPAER, ROCK] | [SCISSORS, PAPAER] | [ROCK, SCISSORS]
-      LOOSE
+      0
     end
   end
 
@@ -34,18 +34,39 @@ class Day2
     end
   end
 
+  def fix_game(game)
+    case game
+    in [move, LOOSE]
+      puts "LOOSE #{move}"
+      score_move move
+    in [move, DRAW]
+      puts "DRAW #{move}"
+      score_move move
+    in [move, WIN]
+      puts "WIN #{move}"
+      score_move move
+    end
+  end
+
   def part1(input)
     input.split("\n").map do |game|
-      moves = game.split(' ').map do |move|
-        score_move(move)
+      game.split(' ').map do |move|
+        score_move move
       end
-      score_game(moves) + moves[1]
+      score_game(game.split(' ')) # + moves[1]
     end
          .sum
   end
 
-  def part2(_input)
-    nil
+  def part2(input)
+    input.split("\n").map do |game|
+      puts '---'
+      moves = game.split(' ').map do |move|
+        score_move move
+      end
+      score_game([fix_game(moves), moves[0]]) + moves[1]
+    end
+         .sum
   end
 end
 
@@ -105,6 +126,6 @@ if __FILE__ == $PROGRAM_NAME
   part1 = day2.part1 example_input
   puts "Part 1: #{part1}"
 
-  part2 = day2.part2 example_input
-  puts "Part 2: #{part2}"
+  # part2 = day2.part2 example_input
+  # puts "Part 2: #{part2}"
 end
