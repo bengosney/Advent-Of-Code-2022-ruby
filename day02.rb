@@ -50,10 +50,10 @@ class Day2
 
   def part1(input)
     input.split("\n").map do |game|
-      game.split(' ').map do |move|
+      moves = game.split(' ').map do |move|
         score_move move
       end
-      score_game(game.split(' ')) # + moves[1]
+      score_game(moves) + moves[1]
     end
          .sum
   end
@@ -61,10 +61,11 @@ class Day2
   def part2(input)
     input.split("\n").map do |game|
       puts '---'
-      moves = game.split(' ').map do |move|
+      game.split(' ').map do |move|
         score_move move
       end
-      score_game([fix_game(moves), moves[0]]) + moves[1]
+      # score_game([fix_game(moves), moves[0]]) + moves[1]
+      1
     end
          .sum
   end
