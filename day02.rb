@@ -10,6 +10,9 @@ LOOSE = 'X'
 DRAW = 'Y'
 WIN = 'Z'
 
+MOVE_LOOSE = { 'A' => 'C', 'B' => 'A', 'C' => 'B' }.freeze
+MOVE_WIN = { 'A' => 'B', 'B' => 'C', 'C' => 'A' }.freeze
+
 # Solver for Day 2
 class Day2
   def score_game(game)
@@ -37,14 +40,11 @@ class Day2
   def fix_game(game)
     case game
     in [move, LOOSE]
-      puts "LOOSE #{move}"
-      score_move move
+      [move, MOVE_LOOSE[move]]
     in [move, DRAW]
-      puts "DRAW #{move}"
-      score_move move
+      [move, move]
     in [move, WIN]
-      puts "WIN #{move}"
-      score_move move
+      [move, MOVE_WIN[move]]
     end
   end
 
@@ -60,12 +60,10 @@ class Day2
 
   def part2(input)
     input.split("\n").map do |game|
-      puts '---'
-      game.split(' ').map do |move|
+      moves = fix_game(game.split(' ')).map do |move|
         score_move move
       end
-      # score_game([fix_game(moves), moves[0]]) + moves[1]
-      1
+      score_game(moves) + moves[1]
     end
          .sum
   end
@@ -83,7 +81,7 @@ describe Day2 do
     expect(solver.part1(example_input)).to eq(15)
   end
 
-  it 'Part 2' do
+  it 'Part 2: fix the games' do
     solver = Day2.new
     expect(solver.part2(example_input)).to eq(12)
   end
@@ -127,6 +125,6 @@ if __FILE__ == $PROGRAM_NAME
   part1 = day2.part1 example_input
   puts "Part 1: #{part1}"
 
-  # part2 = day2.part2 example_input
-  # puts "Part 2: #{part2}"
+  part2 = day2.part2 example_input
+  puts "Part 2: #{part2}"
 end
