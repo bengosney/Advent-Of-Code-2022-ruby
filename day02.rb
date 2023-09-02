@@ -121,10 +121,10 @@ describe Day2 do
 end
 
 if __FILE__ == $PROGRAM_NAME
-  day2 = Day2.new
-  part1 = day2.part1 example_input
+  solver = Day2.new
+  part1 = solver.part1 example_input
   puts "Part 1: #{part1}"
 
-  part2 = day2.part2 example_input
+  part2 = solver.part2 example_input
   puts "Part 2: #{part2}"
 end
